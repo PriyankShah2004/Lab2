@@ -1,40 +1,30 @@
-
 #include <iostream>
+#include "Input.h"
 using namespace std;
  
 int main()
 { 
- 
-    int processes, resources, i, j, z;
-    processes = 5;
-    resources = 3; 
 
-    int allocation[5][3] = {{0,1,0},{2,0,0},{3,0,2},{2,1,1},{0,0,2}};
- 
-    int maximum[5][3] = {{7,5,3},{3,2,2},{9,0,2},{2,2,2},{4,3,3}}; 
- 
-    int available[3] ={3,3,2};
- 
-    int ans[processes], index = 0;
-
+    int ans[processes];
     bool finish[processes] = {0};
-    
+    int index = 0;
+    int need[5][3];
     /* finish gives status of the process that is indexed.*/
 
-    int need[5][3];
-    for (i = 0; i < processes; i++) {
-        for (j = 0; j < resources; j++){
+    for (int i = 0; i < processes; i++) {
+        for (int j = 0; j < resources; j++){
             need[i][j] = maximum[i][j] - allocation[i][j];
         }
     }
+    /* Need[i,j] = k need processes[i] needs k instances of resources[j]*/
     /* for loop that goes through each row and column to make a 2d array that is made of Max-allocation */
 
     int y = 0;
     for (z = 0; z < processes; z++) {
-        for (i = 0; i < processes; i++) {
+        for (int i = 0; i < processes; i++) {
             if (finish[i] == 0) {
                 int err = 0;
-                for (j = 0; j < resources; j++) {
+                for (int j = 0; j < resources; j++) {
                     if (need[i][j] > available[j]){
                         err = 1;
                         break;
@@ -65,9 +55,9 @@ int main()
 
     if(err==1){
         cout << "Safe Sequence is " << endl;
-        for(i = 0; i < processes - 1; i++)
+        for(int i = 0; i < processes - 1; i++)
             cout << " P" << ans[i];
-            cout << " P" << ans[processes - 1] <<endl;
+            cout << " P" << ans[4];
   }
     return (0);
 }
